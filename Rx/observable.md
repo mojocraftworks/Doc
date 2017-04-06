@@ -7,7 +7,7 @@ This pattern facilitates concurrent operations because it does not need to block
 This page explains what the reactive pattern is and what Observables and observers ar (and how observers subscribe to Observables).
 Other pages show how you [the variety of Observable operators](./operators.md) to link Observables together and change their behaviors.
 
-![http://reactivex.io/assets/operators/legend.png]
+![](http://reactivex.io/assets/operators/legend.png)
 
 
 See Also
