@@ -1,4 +1,4 @@
-### Observable
+# Observable
 
 In ReactiveX an _observer subscribes to an Observable_.
 Then that observer reacts to whatever item or sequence of items the Observable _emits_.
@@ -21,7 +21,7 @@ See Also
 - [Observable object](http://xgrommx.github.io/rx-book/content/observable/index.html) (RxJS) by Dennis Stoyanov
 - [Turning a callback into an Rx Observable](https://afterecho.uk/blog/turning-a-callback-into-an-rx-observable.html) by @afterecho
 
-### Background
+# Background
 
 In many software programming tasks, you more or less expect that the instructions you write will execute and complete incrementally, one-at-a-time, in order as you have written them.
 But in ReactiveX, many instructions may execute in parallel and their results are later captured, in arbitrary order, by "observers.”
@@ -36,7 +36,7 @@ An Observable emits items or sends notifications to its observers by calling the
 In other documents and other contexts, what we are calling an _observer_ is sometimes called a _**subscriber**_, _**watcher**_, or _**reactor**_.
 This model in general is often referred to as the [_reactor pattern_](http://en.wikipedia.org/wiki/Reactor_pattern).
 
-### Establishing Observers
+# Establishing Observers
 
 This page uses Groovy-like pseudo code for its examples, but there are ReactiveX implementations in many languages.
 
@@ -74,7 +74,7 @@ myObservable.subscribe(myOnNext);
 // go on about my business
 ```
 
-#### onNext, onCompleted, and onError
+## onNext, onCompleted, and onError
 
 [The `Subscribe` method](./operators/subscribe.md) is how you connect an observer to an Observable.
 Your observer implements some subset of the following methods:
@@ -111,7 +111,7 @@ See Also
 
 - [Introduction to Rx: IObserver](http://www.introtorx.com/Content/v1.0.10621.0/02_KeyTypes.html#IObserver)
 
-#### Unsubscribing
+## Unsubscribing
 
 In some ReactiveX implementations, there is a specialized observer interface, `Subscriber`, that implements an `unsubscribe` method.
 You can call this method to indicate that the Subscriber is no longer interested in any of the Observables it is currently subscribed to.
@@ -120,7 +120,7 @@ Those Observables can then (if they have no other interested observers) choose t
 The results of this unsubscription will cascade back through the chain of operators that applies to the Observable that the observer subscribed to, and this will cause each link in the chain to stop emitting items.
 This is not guaranteed to happen immediately, however, and it is possible for an Observable to generate and attempt to emit items for a while even after no observers remain to observe these emissions.
 
-#### Some Notes on Naming Conventions
+## Some Notes on Naming Conventions
 
 Each language-specific implementation of ReactiveX has its own naming quirks.
 There is no canonical naming standard, though there are many commonalities between implementations.
@@ -131,7 +131,7 @@ For example there is the `onEvent` naming pattern (e.g. `onNext`, `onCompleted`,
 In some contexts such names would indicate methods by means of which event handlers are _**registered**_.
 In ReactiveX, however, they name the event handlers themselves.
 
-### "Hot" and "Cold" Observables
+# "Hot" and "Cold" Observables
 
 When does an Observable begin emitting its sequence of items?
 It depends on the Observable.
@@ -141,7 +141,7 @@ A _**cold**_ Observable, on the other hand, waits until an observer subscribes t
 In some implementations of ReactiveX, there is also something called a _**Connectable**_ Observable.
 Such an Observable does not begin emitting items until its [Connect](./operators/connect.md) method is called, whether or not any observers have subscribed to it.
 
-### Composition via Observable Operators
+# Composition via Observable Operators
 
 Observables and observers are only the start of ReactiveX.
 By themselves they’d be nothing more than a slight extension of the standard observer pattern, better suited to handling a sequence of events rather than a single callback.
@@ -198,7 +198,7 @@ This documentation groups information about the various operators and examples o
 
 These pages include information about some operators that are not part of the core of ReactiveX but are implemented in one or more of language-specific implementations and/or optional modules.
 
-#### Chaining Operators
+## Chaining Operators
 
 Most operators operate on an Observable and return an Observable.
 This allows you to apply these operators one after the other, in a chain.
