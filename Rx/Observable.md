@@ -12,7 +12,7 @@ http://reactivex.io/assets/operators/legend.png
 
 See Also
 
-- [Single](http://reactivex.io/documentation/single.html) - a specialized version of an Observable that emits only a single item
+- [Single](./single.md) - a specialized version of an Observable that emits only a single item
 - [Rx Workshop: Introduction](http://channel9.msdn.com/Series/Rx-Workshop/Rx-Workshop-Introduction)
 - [Introduction to Rx: IObservable](http://www.introtorx.com/Content/v1.0.10621.0/02_KeyTypes.html#IObservable)
 - [Mastering observables](http://docs.couchbase.com/developer/java-2.0/observables.html) (from the Couchbase Server documentation)
@@ -76,7 +76,7 @@ myObservable.subscribe(myOnNext);
 
 #### onNext, onCompleted, and onError
 
-[The `Subscribe` method](http://reactivex.io/documentation/operators/subscribe.html) is how you connect an observer to an Observable.
+[The `Subscribe` method](./operators/subscribe.md) is how you connect an observer to an Observable.
 Your observer implements some subset of the following methods:
 
 **`onNext`**
@@ -93,7 +93,7 @@ The onError method takes as its parameter an indication of what caused the error
 
 >An Observable calls this method after it has called onNext for the final time, if it has not encountered any errors.
 
-By the terms of [the Observable contract](http://reactivex.io/documentation/contract.html), it may call `onNext` zero or more times, and then may follow those calls with a call to either `onCompleted` or onError but not both, which will be its last call.
+By the terms of [the Observable contract](./contract.md), it may call `onNext` zero or more times, and then may follow those calls with a call to either `onCompleted` or onError but not both, which will be its last call.
 By convention, in this document, calls to `onNext` are usually called _**emissions**_ of items, whereas calls to `onCompleted` or `onError` are called _**notifications**_.
 
 A more complete `subscribe` call example looks like this:
@@ -139,7 +139,7 @@ A _**hot**_ Observable may begin emitting items as soon as it is created, and so
 A _**cold**_ Observable, on the other hand, waits until an observer subscribes to it before it begins to emit items, and so such an observer is guaranteed to see the whole sequence from the beginning.
 
 In some implementations of ReactiveX, there is also something called a _**Connectable**_ Observable.
-Such an Observable does not begin emitting items until its [Connect](http://reactivex.io/documentation/operators/connect.html) method is called, whether or not any observers have subscribed to it.
+Such an Observable does not begin emitting items until its [Connect](./operators/connect.md) method is called, whether or not any observers have subscribed to it.
 
 ### Composition via Observable Operators
 
@@ -152,38 +152,60 @@ These Rx operators allow you to compose asynchronous sequences together in a dec
 
 This documentation groups information about the various operators and examples of their usage into the following pages:
 
-[Creating Observables]()
+[Creating Observables](./operators.md#creating)
 
 >`Create`, `Defer`, `Empty`/`Never`/`Throw`, `From`, `Interval`, `Just`, `Range`, `Repeat`, `Start`, and `Timer`
 
-[Transforming Observable Items]()
+[Transforming Observable Items](./operators.md#transforming)
 
->Buffer, FlatMap, GroupBy, Map, Scan, and Window
+>`Buffer`, `FlatMap`, `GroupBy`, `Map`, `Scan`, and `Window`
 
-[Filtering Observables]()
+[Filtering Observables](./operators.md#filtering)
 
->Debounce, Distinct, ElementAt, Filter, First, IgnoreElements, Last, Sample, Skip, SkipLast, Take, and TakeLast
+>`Debounce`, `Distinct`, `ElementAt`, `Filter`, `First`, `IgnoreElements`, `Last`, `Sample`, `Skip`, `SkipLast`, `Take`, and `TakeLast`
 
-[Combining Observables]()
+[Combining Observables](./operators.md#combining)
 
->And/Then/When, CombineLatest, Join, Merge, StartWith, Switch, and Zip
+>`And`/`Then`/`When`, `CombineLatest`, `Join`, `Merge`, `StartWith`, `Switch`, and `Zip`
 
-[Error Handling Operators]()
+[Error Handling Operators](./operators.md#error)
 
->Catch and Retry
+>`Catch` and `Retry`
 
-[Utility Operators]()
+[Utility Operators](./operators.md#utility)
 
->Delay, Do, Materialize/Dematerialize, ObserveOn, Serialize, Subscribe, SubscribeOn, TimeInterval, Timeout, Timestamp, and Using
+>`Delay`, `Do`, `Materialize`/`Dematerialize`, `ObserveOn`, `Serialize`, `Subscribe`, `SubscribeOn`, `TimeInterval`, `Timeout`, `Timestamp`, and `Using`
 
-[[Conditional and Boolean Operators]]
+[Conditional and Boolean Operators](./operators.md#conditional)
 
-All, Amb, Contains, DefaultIfEmpty, SequenceEqual, SkipUntil, SkipWhile, TakeUntil, and TakeWhile
-Mathematical and Aggregate Operators
-Average, Concat, Count, Max, Min, Reduce, and Sum
-Converting Observables
-To
-Connectable Observable Operators
-Connect, Publish, RefCount, and Replay
-Backpressure Operators
-a variety of operators that enforce particular flow-control policies
+>`All`, `Amb`, `Contains`, `DefaultIfEmpty`, `SequenceEqual`, `SkipUntil`, `SkipWhile`, `TakeUntil`, and `TakeWhile`
+
+[Mathematical and Aggregate Operators](./operators.md#mathematical)
+
+>`Average`, `Concat`, `Count`, `Max`, `Min`, `Reduce`, and `Sum`
+
+[Converting Observables](./operators.md#conversion)
+
+>`To`
+
+[Connectable Observable Operators](./operators.md#connectable)
+
+>`Connect`, `Publish`, `RefCount`, and `Replay`
+
+[Backpressure Operators](./operators/backpressure.md)
+
+>a variety of operators that enforce particular flow-control policies
+
+These pages include information about some operators that are not part of the core of ReactiveX but are implemented in one or more of language-specific implementations and/or optional modules.
+
+#### Chaining Operators
+
+Most operators operate on an Observable and return an Observable.
+This allows you to apply these operators one after the other, in a chain.
+Each operator in the chain modifies the Observable that results from the operation of the previous operator.
+
+There are other patterns, like the Builder Pattern, in which a variety of methods of a particular class operate on an item of that same class by modifying that object through the operation of the method.
+These patterns also allow you to chain the methods in a similar way.
+But while in the Builder Pattern, the order in which the methods appear in the chain does not usually matter, with the Observable operators order matters.
+
+A chain of Observable operators do not operate independently on the original Observable that originates the chain, but they operate in turn, each one operating on the Observable generated by the operator immediately previous in the chain.
